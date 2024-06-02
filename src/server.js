@@ -47,7 +47,7 @@ export const setupServer = () => {
     });
   });
 
-  app.use((err, req, res, next) => {
+  app.use((err, req, res) => {
     console.log(err.stack);
     res.status(500).json({
       message: 'Server Error',
