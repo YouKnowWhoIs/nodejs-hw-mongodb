@@ -30,7 +30,7 @@ export const setupServer = () => {
   app.get('/contacts/:contactId', async (req, res) => {
     const { contactId } = req.params;
     if (!mongoose.Types.ObjectId.isValid(contactId)) {
-      return res.status(404).json({
+      return res.status(500).json({
         data: 'ID not found',
       });
     }
