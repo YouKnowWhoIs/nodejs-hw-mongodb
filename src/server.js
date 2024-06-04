@@ -28,17 +28,28 @@ export const setupServer = () => {
   });
 
   app.get('/:contactId', async (req, res) => {
+
     const { contactId } = req.params;
     if (!mongoose.Types.ObjectId.isValid(contactId)) {
       return res.status(404).json({
         data: 'ID not found',
       });
     }
-    const contact = await getOneContacts(contactId);
-    res.status(200).json({
-      message: `Successfully found contact with id ${contactId}!`,
-      data: contact,
-    });
+
+    try {
+      const contact = await getOneContacts(contactId);
+      if (!contact) {
+        return res.status(404).json({
+          message: `Contact with id ${contactId} not found!`,
+        });
+      }
+      res.status(200).json({
+        message: `Successfully found contact with id ${contactId}!`,
+        data: contact,
+      });
+    } catch (err) {
+      next(err);
+    }
   });
 
   app.use('*', (req, res, next) => {
@@ -48,10 +59,10 @@ export const setupServer = () => {
     next();
   });
 
-  app.use((err, req, res) => {
-    console.log(err.stack);
+  app.use((err, req, res, next) => {
     res.status(500).json({
       message: 'Server Error',
+      error: err.message,
     });
   });
 
