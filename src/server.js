@@ -19,7 +19,7 @@ export const setupServer = () => {
 
   app.use(cors());
 
-  app.get('/', async (req, res) => {
+  app.get('/contacts', async (req, res) => {
     const contacts = await getAllContacts();
     res.status(200).json({
       message: 'Successfully found contacts!',
@@ -27,7 +27,7 @@ export const setupServer = () => {
     });
   });
 
-  app.get('/:contactId', async (req, res, next) => {
+  app.get('/contacts/:contactId', async (req, res, next) => {
     const { contactId } = req.params;
     if (!mongoose.Types.ObjectId.isValid(contactId)) {
       return res.status(404).json({
