@@ -27,8 +27,7 @@ export const setupServer = () => {
     });
   });
 
-  app.get('/:contactId', async (req, res) => {
-
+  app.get('/:contactId', async (req, res, next) => {
     const { contactId } = req.params;
     if (!mongoose.Types.ObjectId.isValid(contactId)) {
       return res.status(404).json({
