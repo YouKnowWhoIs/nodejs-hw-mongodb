@@ -1,9 +1,41 @@
 import createHttpError from 'http-errors';
 import { ContactsCollection } from '../db/contact.js';
+import { calculatePaginationData } from '../utils/caculatePaginationData.js';
+import { SORT_ORDER } from '../contacts/index.js';
 
-export const getAllContacts = async () => {
-  const contacts = await ContactsCollection.find();
-  return contacts;
+export const getAllContacts = async ({
+  page = 1,
+  perPage = 10,
+  sortBy = '_id',
+  sortOrder = SORT_ORDER.ASC,
+  filter = {},
+}) => {
+  const limit = perPage;
+  const skip = (page - 1) * perPage;
+
+  const studentsQuery = ContactsCollection.find();
+
+  if (filter.contactType) {
+    studentsQuery.where('contactType').equals(filter.contactType);
+  }
+
+  if (filter.isFavorite) {
+    studentsQuery.where('isFavorite').equals(filter.isFavorite);
+  }
+
+  const studentsCount = await ContactsCollection.find()
+    .merge(studentsQuery)
+    .countDocuments();
+
+  const contacts = await studentsQuery
+    .skip(skip)
+    .limit(limit)
+    .sort({ [sortBy]: sortOrder })
+    .exec();
+
+  const paginationData = calculatePaginationData(studentsCount, perPage, page);
+
+  return { data: contacts, ...paginationData };
 };
 
 export const getOneContacts = async (contactId) => {
@@ -16,7 +48,7 @@ export const createContacts = async (payload) => {
   return contact;
 };
 
-export const updatetContacts = async (id, payload) => {
+export const updatedContacts = async (id, payload) => {
   const contact = await ContactsCollection.findByIdAndUpdate(id, payload, {
     new: true,
   });
