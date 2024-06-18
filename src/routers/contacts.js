@@ -8,7 +8,7 @@ import {
 } from '../controllers/contacts.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import { createContactSchema } from '../validation/validationContact.js';
-import { validateMongoId } from '../middlewares/valiateMongoId.js';
+import validateMongoId from '../middlewares/valiateMongoId.js';
 import { validateBody } from '../middlewares/validateBody.js';
 
 const router = Router();
