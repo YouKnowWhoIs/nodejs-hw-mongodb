@@ -7,7 +7,8 @@ import {
   updateContactController,
 } from '../controllers/contacts.js';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
-import { createContactSchema } from '../validation/validationContact.js';
+import { createContactSchema } from '../validation/createContactSchema.js';
+import { updateContactSchema } from '../validation/updateContactSchema.js';
 import validateMongoId from '../middlewares/valiateMongoId.js';
 import { validateBody } from '../middlewares/validateBody.js';
 
@@ -27,7 +28,7 @@ router.post(
 
 router.patch(
   '/contacts/:contactId',
-  validateBody(createContactSchema),
+  validateBody(updateContactSchema),
   ctrlWrapper(updateContactController),
 );
 
