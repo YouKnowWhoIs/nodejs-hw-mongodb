@@ -19,8 +19,8 @@ export const getAllContacts = async ({
     studentsQuery.where('contactType').equals(filter.contactType);
   }
 
-  if (filter.isFavorite) {
-    studentsQuery.where('isFavorite').equals(filter.isFavorite);
+  if (filter.isFavourite) {
+    studentsQuery.where('isFavourite').equals(filter.isFavourite);
   }
 
   const studentsCount = await ContactsCollection.find()
