@@ -1,5 +1,5 @@
 import createHttpError from 'http-errors';
-import { ContactsCollection } from '../db/contact.js';
+import { ContactsCollection } from '../db/models/contact.js';
 import { calculatePaginationData } from '../utils/caculatePaginationData.js';
 import { SORT_ORDER } from '../contacts/index.js';
 
@@ -9,6 +9,7 @@ export const getAllContacts = async ({
   sortBy = '_id',
   sortOrder = SORT_ORDER.ASC,
   filter = {},
+  userId,
 }) => {
   const limit = perPage;
   const skip = (page - 1) * perPage;
@@ -22,6 +23,8 @@ export const getAllContacts = async ({
   if (filter.isFavourite) {
     studentsQuery.where('isFavourite').equals(filter.isFavourite);
   }
+
+  studentsQuery.where('userId').equals(userId);
 
   const studentsCount = await ContactsCollection.find()
     .merge(studentsQuery)
@@ -43,8 +46,11 @@ export const getOneContacts = async (contactId) => {
   return contact;
 };
 
-export const createContacts = async (payload) => {
-  const contact = await ContactsCollection.create(payload);
+export const createContacts = async ({ payload, userId }) => {
+  const contact = await ContactsCollection.create({
+    ...payload,
+    userId: userId,
+  });
   return contact;
 };
 
