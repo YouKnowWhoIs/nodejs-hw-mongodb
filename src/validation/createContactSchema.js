@@ -1,9 +1,9 @@
-import joi from 'joi';
+import Joi from 'joi';
 
-export const createContactSchema = joi.object({
-  name: joi.string().min(3).max(20).required(),
-  phoneNumber: joi.string().min(3).max(20).required(),
-  email: joi.string().email().min(3).max(20),
-  isFavourite: joi.boolean(),
-  contactType: joi.valid('work', 'home', 'personal').required(),
+export const createContactSchema = Joi.object({
+  name: Joi.string().min(3).max(20).required(),
+  phoneNumber: Joi.string().min(3).max(20).required(),
+  email: Joi.string().email().min(3).max(20),
+  isFavourite: Joi.boolean(),
+  contactType: Joi.valid('work', 'home', 'personal').required(),
 });
