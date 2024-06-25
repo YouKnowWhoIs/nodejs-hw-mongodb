@@ -21,6 +21,8 @@ export const setupServer = () => {
 
   app.use(cors());
 
+  app.use(cookieParser());
+
   app.use(express.json());
 
   app.use(router);
@@ -28,8 +30,6 @@ export const setupServer = () => {
   app.use('*', notFoundHandler);
 
   app.use(errorHandler);
-
-  app.use(cookieParser());
 
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

@@ -9,15 +9,15 @@ import {
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import { createContactSchema } from '../validation/createContactSchema.js';
 import { updateContactSchema } from '../validation/updateContactSchema.js';
-// import validateMongoId from '../middlewares/valiateMongoId.js';
+import validateMongoId from '../middlewares/valiateMongoId.js';
 import { validateBody } from '../middlewares/validateBody.js';
 import { authenticate } from '../middlewares/authenticate.js';
 
 const contactsRouter = Router();
 
-// contactsRouter.use('/:contactId', validateMongoId);
+contactsRouter.use('/:contactId', validateMongoId);
 
-contactsRouter.use(authenticate);
+contactsRouter.use('/', authenticate);
 
 contactsRouter.get('/', ctrlWrapper(getContctsController));
 
