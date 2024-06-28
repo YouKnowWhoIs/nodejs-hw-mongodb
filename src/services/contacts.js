@@ -41,8 +41,9 @@ export const getAllContacts = async ({
   return { data: contacts, ...paginationData };
 };
 
-export const getOneContacts = async (contactId, userId) => {
-  const contact = await ContactsCollection.findOne({ _id: contactId, userId });
+export const getOneContacts = async (contactId) => {
+  // const contact = await ContactsCollection.findById({ _id: contactId, userId });
+  const contact = await ContactsCollection.findById(contactId);
   return contact;
 };
 
@@ -56,7 +57,7 @@ export const createContacts = async (payload, userId) => {
 
 export const updatedContacts = async (
   contactId,
-  userId,
+  // userId,
   payload,
   options = {},
 ) => {
@@ -64,7 +65,7 @@ export const updatedContacts = async (
   //   new: true,
   // });
   const contact = await ContactsCollection.findOneAndUpdate(
-    { _id: contactId, userId },
+    { _id: contactId },
     payload,
     {
       new: true,

@@ -68,12 +68,13 @@ export const updateContactController = async (req, res, next) => {
   const result = await updatedContacts(contactId, req.body);
   if (!result) {
     next(createHttpError(404, 'Contact not found'));
+    return;
   }
 
   res.status(200).json({
     status: 200,
     message: 'Successfuly update contact!',
-    data: result,
+    data: result.contact,
   });
 };
 
