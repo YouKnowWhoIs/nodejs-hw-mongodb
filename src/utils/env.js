@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 export const env = (envName, defaultName) => {
-  const value = process.env[envName];
+  const value = process.env[`${envName}`];
 
   if (value) return value;
   if (defaultName) return defaultName;
