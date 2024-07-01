@@ -2,6 +2,7 @@ import createHttpError from 'http-errors';
 import { ContactsCollection } from '../db/models/contact.js';
 import { calculatePaginationData } from '../utils/caculatePaginationData.js';
 import { SORT_ORDER } from '../contacts/index.js';
+import { saveFile } from '../utils/saveFile.js';
 
 export const getAllContacts = async ({
   page = 1,
@@ -47,10 +48,13 @@ export const getOneContacts = async (contactId) => {
   return contact;
 };
 
-export const createContacts = async (payload, userId) => {
+export const createContacts = async ({ photo, ...payload }, userId) => {
+  const url = await saveFile(photo);
+
   const contact = await ContactsCollection.create({
     ...payload,
     userId: userId,
+    photoUrl: url,
   });
   return contact;
 };
