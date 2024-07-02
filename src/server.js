@@ -6,9 +6,9 @@ import router from './routers/index.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import { env } from './utils/env.js';
-import { ENV_VARS, UPLOAD_DIR } from './contacts/index.js';
+import { UPLOAD_DIR } from './contacts/index.js';
 
-const PORT = Number(env(ENV_VARS.PORT, '3000'));
+const PORT = Number(env(PORT, '3000'));
 
 export const setupServer = () => {
   const app = express();
