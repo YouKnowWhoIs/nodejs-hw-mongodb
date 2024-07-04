@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 import createHttpError from 'http-errors';
 import handlebars from 'handlebars';
 import path from 'node:path';
-import fs from 'node:fs/promises';
+import fs from 'fs/promises';
 
 import { UsersCollection } from '../db/models/user.js';
 import { SessionsCollection } from '../db/models/session.js';
