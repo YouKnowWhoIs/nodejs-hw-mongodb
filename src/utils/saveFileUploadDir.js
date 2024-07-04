@@ -1,6 +1,6 @@
 import path from 'node:path';
 import fs from 'node:fs/promises';
-import { TEMP_UPLOAD_DIR, UPLOAD_DIR } from '../contacts/index.js';
+import { ENV_VARS, TEMP_UPLOAD_DIR, UPLOAD_DIR } from '../contacts/index.js';
 import { env } from './env.js';
 
 export const saveFileToUploadDir = async (file) => {
@@ -9,5 +9,5 @@ export const saveFileToUploadDir = async (file) => {
     path.join(UPLOAD_DIR, file.filename),
   );
 
-  return `${env('APP_DOMIAN')}/upload/${file.filename}`;
+  return `${env(ENV_VARS.APP_DOMAIN)}/uploads/${file.filename}`;
 };
