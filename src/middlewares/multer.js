@@ -2,13 +2,13 @@ import multer from 'multer';
 import { TEMP_UPLOAD_DIR } from '../contacts/index.js';
 
 const storage = multer.diskStorage({
-  destination: function (req, file, cd) {
-    cd(null, TEMP_UPLOAD_DIR);
+  destination: function (req, file, cb) {
+    cb(null, TEMP_UPLOAD_DIR);
   },
-  filename: function (req, file, cd) {
+  filename: function (req, file, cb) {
     const uniqueSuffix = Date.now();
-    cd(null, `${uniqueSuffix}_${file.originalname}`);
+    cb(null, `${uniqueSuffix}_${file.originalname}`);
   },
 });
 
-export const upload = multer({ storage });
+export const upload = multer({ storage: storage });

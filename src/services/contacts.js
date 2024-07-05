@@ -54,7 +54,7 @@ export const createContacts = async ({ photo, ...payload }, userId) => {
   const contact = await ContactsCollection.create({
     ...payload,
     userId: userId,
-    photoUrl: url,
+    photo: url,
   });
   return contact;
 };
