@@ -28,15 +28,15 @@ contactsRouter.get('/', ctrlWrapper(getContctsController));
 
 contactsRouter.post(
   '/',
-  validateBody(createContactSchema),
   upload.single('photo'),
+  // validateBody(createContactSchema),
   ctrlWrapper(createContactController),
 );
 
 contactsRouter.patch(
   '/:contactId',
-  validateBody(updateContactSchema),
   upload.single('photo'),
+  validateBody(updateContactSchema),
   ctrlWrapper(updateContactController),
 );
 
