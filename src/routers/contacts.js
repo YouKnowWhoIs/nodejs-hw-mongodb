@@ -29,7 +29,7 @@ contactsRouter.get('/', ctrlWrapper(getContctsController));
 contactsRouter.post(
   '/',
   upload.single('photo'),
-  // validateBody(createContactSchema),
+  validateBody(createContactSchema),
   ctrlWrapper(createContactController),
 );
 
