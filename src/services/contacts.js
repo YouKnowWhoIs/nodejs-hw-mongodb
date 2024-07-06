@@ -49,7 +49,11 @@ export const getOneContacts = async (contactId) => {
 };
 
 export const createContacts = async ({ photo, ...payload }, userId) => {
-  const url = await saveFile(photo);
+  let url;
+
+  if (photo) {
+    url = await saveFile(photo);
+  }
 
   const contact = await ContactsCollection.create({
     ...payload,
