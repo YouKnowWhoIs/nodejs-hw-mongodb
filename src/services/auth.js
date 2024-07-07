@@ -142,7 +142,7 @@ export const resetPassword = async (payload) => {
   let entries;
 
   try {
-    entries = jwt.verify(payload.token, env('JWT_SECRET'));
+    entries = jwt.verify(payload.token, env(ENV_VARS.JWT_SECRET));
   } catch (err) {
     if (err instanceof Error) throw createHttpError(401, err.message);
     throw err;
@@ -150,7 +150,7 @@ export const resetPassword = async (payload) => {
 
   const user = await UsersCollection.findOne({
     email: entries.email,
-    _i: entries.sub,
+    _id: entries.sub,
   });
 
   if (!user) throw createHttpError(404, 'User not found');
