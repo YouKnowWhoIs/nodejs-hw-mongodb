@@ -2,7 +2,7 @@ import createHttpError from 'http-errors';
 import swaggerUI from 'swagger-ui-express';
 import fs from 'node:fs';
 
-import { SWAGGER_PATH } from '../contacts';
+import { SWAGGER_PATH } from '../contacts/index.js';
 
 export const swaggerDocs = () => {
   try {
