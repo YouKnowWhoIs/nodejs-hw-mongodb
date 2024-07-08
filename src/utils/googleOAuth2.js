@@ -8,7 +8,7 @@ import createHttpError from 'http-errors';
 import { ENV_VARS } from '../contacts/index.js';
 
 const googleConfig = JSON.parse(
-  fs.readFileSync(path.join(process.cwd(), 'google.json')).toString(),
+  fs.readFileSync(path.join(process.cwd(), 'google-oauth.json')).toString(),
 );
 
 const googleOAuthClient = new OAuth2Client({
