@@ -20,7 +20,7 @@ parameters:
     in: query
     schema:
       type: string
-      example: 'age'
+      example: '_id'
     description: "All contact's fields can be mentioned. Default value - _id"
   - name: sortOrder
     in: query
@@ -38,22 +38,12 @@ parameters:
     schema:
       type: number
       example: 10
-  - name: minAge
-    in: query
-    schema:
-      type: number
-      example: 10
-  - name: maxAge
-    in: query
-    schema:
-      type: number
-      example: 16
-  - name: gender
+  - name: contactType
     in: query
     schema:
       type: string
-      enum: ['male', 'female', 'other']
-      example: male
+      enum: ['work', 'home', 'personal']
+      example: work
 responses:
   '200':
     description: Successfully found contacts!
@@ -86,7 +76,7 @@ responses:
                 data:
                   type: array
                   items:
-                    $ref: ..\..\components\schemas\student.yaml
+                    $ref: ..\..\components\schemas\contact.yaml
                 page:
                   type: number
                   example: 2

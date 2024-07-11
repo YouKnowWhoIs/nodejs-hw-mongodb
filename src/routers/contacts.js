@@ -24,7 +24,7 @@ contactsRouter.get('/', ctrlWrapper(getContctsController));
 
 contactsRouter.get('/:contactId', ctrlWrapper(getContctsByIdController));
 
-contactsRouter.get('/', ctrlWrapper(getContctsController));
+// contactsRouter.get('/', ctrlWrapper(getContctsController));
 
 contactsRouter.post(
   '/',
