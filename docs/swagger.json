@@ -11,10 +11,10 @@
   },
   "servers": [
     {
-      "url": "<http://localhost:3000>"
+      "url": "http://localhost:3000"
     },
     {
-      "url": "<https://example.com/api/v1>"
+      "url": "https://nodejs-hw-mongodb-wyzv.onrender.com"
     }
   ],
   "tags": [
@@ -63,7 +63,7 @@
             "in": "query",
             "schema": {
               "type": "string",
-              "example": "age"
+              "example": "_id"
             },
             "description": "All contact's fields can be mentioned. Default value - _id"
           },
@@ -96,32 +96,16 @@
             }
           },
           {
-            "name": "minAge",
-            "in": "query",
-            "schema": {
-              "type": "number",
-              "example": 10
-            }
-          },
-          {
-            "name": "maxAge",
-            "in": "query",
-            "schema": {
-              "type": "number",
-              "example": 16
-            }
-          },
-          {
-            "name": "gender",
+            "name": "contactType",
             "in": "query",
             "schema": {
               "type": "string",
               "enum": [
-                "male",
-                "female",
-                "other"
+                "work",
+                "home",
+                "personal"
               ],
-              "example": "male"
+              "example": "work"
             }
           }
         ],
@@ -161,7 +145,7 @@
                         "data": {
                           "type": "array",
                           "items": {
-                            "$ref": "#/components/schemas/student"
+                            "$ref": "#/components/schemas/contact"
                           }
                         },
                         "page": {
@@ -213,54 +197,48 @@
           }
         ],
         "requestBody": {
+          "required": true,
           "content": {
             "multipart/form-data": {
               "schema": {
                 "type": "object",
                 "required": [
                   "name",
-                  "age",
-                  "gender",
-                  "avgMark",
-                  "parentId"
+                  "phoneNumber",
+                  "contactType"
                 ],
                 "properties": {
                   "name": {
-                    "description": "Contact's name",
+                    "description": "Contact's name. Should be between 3 and 20 characters",
                     "type": "string",
                     "example": "John Doe"
                   },
-                  "age": {
-                    "description": "Contact's age",
-                    "type": "number",
-                    "example": 12
+                  "phoneNumber": {
+                    "description": "Contact's phone number. Should be between 3 and 20 characters",
+                    "type": "string",
+                    "example": "123-456-789"
                   },
-                  "gender": {
-                    "description": "Contact's age",
+                  "contactType": {
+                    "description": "Contact's type",
                     "type": "string",
                     "enum": [
-                      "male",
-                      "female",
-                      "other"
+                      "work",
+                      "home",
+                      "personal"
                     ]
                   },
-                  "avgMark": {
-                    "description": "Contact's average mark. Should be between 1 and 12",
-                    "type": "number",
-                    "example": 9.7
+                  "email": {
+                    "description": "Contact's email. Should be between 3 and 20 characters",
+                    "type": "string",
+                    "example": "example@gmail.com"
                   },
-                  "onDuty": {
-                    "description": "Whether is contact on duty",
+                  "isFavourite": {
+                    "description": "Is this a favourite contact?",
                     "type": "boolean",
                     "example": false
                   },
-                  "parentId": {
-                    "description": "Contact's parent id",
-                    "type": "string",
-                    "example": "65e4decdd286b30065d54af9"
-                  },
                   "photo": {
-                    "description": "Contact''s photo",
+                    "description": "Contact's photo",
                     "type": "string",
                     "format": "binary"
                   }
@@ -284,7 +262,7 @@
                   "properties": {
                     "status": {
                       "type": "integer",
-                      "example": 200
+                      "example": 201
                     },
                     "message": {
                       "type": "string",
@@ -292,7 +270,7 @@
                     },
                     "data": {
                       "type": "object",
-                      "$ref": "#/components/schemas/student"
+                      "$ref": "#/components/schemas/contact"
                     }
                   }
                 }
@@ -352,7 +330,114 @@
                     },
                     "data": {
                       "type": "object",
-                      "$ref": "#/components/schemas/student"
+                      "$ref": "#/components/schemas/contact"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Contacts"
+        ],
+        "summary": "Patch contacts by id",
+        "operationId": "patchContact",
+        "description": "Patch contacts by id",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "65ca67e7ae7f10c88b598384",
+            "description": "ID of the contact"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Patch contacts by id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status",
+                    "message",
+                    "data"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully patched contact with id 65ca67e7ae7f10c88b598384!"
+                    },
+                    "data": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/contact"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Contacts"
+        ],
+        "summary": "Delete contact",
+        "operationId": "deleteContact",
+        "description": "Delete contact by id",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "65ca67e7ae7f10c88b598384"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Delete contact by id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "status"
+                  ],
+                  "properties": {
+                    "status": {
+                      "type": "integer",
+                      "example": 204
                     }
                   }
                 }
@@ -374,60 +459,53 @@
       }
     },
     "schemas": {
-      "student": {
+      "contact": {
         "type": "object",
         "required": [
-          "_id",
           "name",
-          "age",
-          "gender",
-          "avgMark",
-          "onDuty"
+          "phoneNumber",
+          "contactType"
         ],
         "properties": {
           "_id": {
             "description": "Contact's id",
             "type": "string",
-            "example": "65e4decdd286b30065d54af9"
+            "example": "65ca67e7ae7f10c88b598384"
           },
           "name": {
-            "description": "Contact's name",
+            "description": "Contact's name. Should be between 3 and 20 characters",
             "type": "string",
             "example": "John Doe"
           },
-          "age": {
-            "description": "Contact's age",
-            "type": "number",
-            "example": 12
-          },
-          "gender": {
-            "description": "Contact's age",
+          "phoneNumber": {
+            "description": "Contact's phone number. Should be between 3 and 20 characters",
             "type": "string",
-            "enum": [
-              "male",
-              "female",
-              "other"
-            ]
+            "example": "123-456-789"
           },
-          "avgMark": {
-            "description": "Contact's average mark. Should be between 1 and 12",
-            "type": "number",
-            "example": 9.7
+          "email": {
+            "description": "Contact's email",
+            "type": "string",
+            "format": "email",
+            "example": "example@gmail.com"
           },
-          "onDuty": {
-            "description": "Whether is contact on duty",
+          "isFavourite": {
+            "description": "is favourite contact's",
             "type": "boolean",
             "example": false
           },
-          "parentId": {
-            "description": "Contact's parent id",
+          "contactType": {
+            "description": "Contact's type",
             "type": "string",
-            "example": "65e4decdd286b30065d54af9"
+            "enum": [
+              "work",
+              "home",
+              "personal"
+            ]
           },
           "photo": {
             "description": "Link to contact's photo",
             "type": "string",
-            "example": "<https://res.cloudinary.com/uqwgdu/image/upload/image.png>"
+            "example": "https://res.cloudinary.com/uqwgdu/image/upload/image.png"
           }
         }
       }
