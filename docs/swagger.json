@@ -80,22 +80,6 @@
             }
           },
           {
-            "name": "minAvgMark",
-            "in": "query",
-            "schema": {
-              "type": "number",
-              "example": 4
-            }
-          },
-          {
-            "name": "maxAvgMark",
-            "in": "query",
-            "schema": {
-              "type": "number",
-              "example": 10
-            }
-          },
-          {
             "name": "contactType",
             "in": "query",
             "schema": {
@@ -356,8 +340,8 @@
         ],
         "parameters": [
           {
-            "in": "path",
             "name": "id",
+            "in": "path",
             "required": true,
             "schema": {
               "type": "string"
@@ -366,6 +350,51 @@
             "description": "ID of the contact"
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "description": "Contact's name. Should be between 3 and 20 characters",
+                    "type": "string",
+                    "example": "John Doe"
+                  },
+                  "phoneNumber": {
+                    "description": "Contact's phone number. Should be between 3 and 20 characters",
+                    "type": "string",
+                    "example": "123-456-789"
+                  },
+                  "contactType": {
+                    "description": "Contact's type",
+                    "type": "string",
+                    "enum": [
+                      "work",
+                      "home",
+                      "personal"
+                    ]
+                  },
+                  "email": {
+                    "description": "Contact's email. Should be between 3 and 20 characters",
+                    "type": "string",
+                    "example": "example@gmail.com"
+                  },
+                  "isFavourite": {
+                    "description": "Is this a favourite contact?",
+                    "type": "boolean",
+                    "example": false
+                  },
+                  "photo": {
+                    "description": "Contact's photo",
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "Patch contacts by id",

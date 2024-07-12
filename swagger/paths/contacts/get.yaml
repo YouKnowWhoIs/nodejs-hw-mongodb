@@ -28,16 +28,6 @@ parameters:
       type: string
       enum: ['asc', 'desc']
       example: 'asc'
-  - name: minAvgMark
-    in: query
-    schema:
-      type: number
-      example: 4
-  - name: maxAvgMark
-    in: query
-    schema:
-      type: number
-      example: 10
   - name: contactType
     in: query
     schema:
