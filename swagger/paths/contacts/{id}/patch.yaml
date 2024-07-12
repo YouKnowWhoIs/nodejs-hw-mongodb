@@ -6,13 +6,43 @@ description: 'Patch contacts by id'
 security:
   - bearerAuth: []
 parameters:
-  - in: path
-    name: id
+  - name: id
+    in: path
     required: true
     schema:
       type: string
     example: '65ca67e7ae7f10c88b598384'
     description: 'ID of the contact'
+requestBody:
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          name:
+            description: "Contact's name. Should be between 3 and 20 characters"
+            type: string
+            example: 'John Doe'
+          phoneNumber:
+            description: "Contact's phone number. Should be between 3 and 20 characters"
+            type: string
+            example: '123-456-789'
+          contactType:
+            description: "Contact's type"
+            type: string
+            enum: ['work', 'home', 'personal']
+          email:
+            description: "Contact's email. Should be between 3 and 20 characters"
+            type: string
+            example: 'example@gmail.com'
+          isFavourite:
+            description: 'Is this a favourite contact?'
+            type: boolean
+            example: false
+          photo:
+            description: "Contact's photo"
+            type: string
+            format: binary
 responses:
   '200':
     description: 'Patch contacts by id'
@@ -30,7 +60,7 @@ responses:
               example: 200
             message:
               type: string
-              example: Successfully patched contact with id 65ca67e7ae7f10c88b598384!
+              example: 'Successfully patched contact with id 65ca67e7ae7f10c88b598384!'
             data:
               type: object
               $ref: ..\..\..\components\schemas\contact.yaml
